@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Hello World!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/fullstackreact/30-days-of-react@master/day-04/public/Timeline.css"
+        rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+
+
+
+
+    <script type="text/babel">
+        const app = React.createElement("h1", {}, "Hello, World!");
+        const mount = document.querySelector("#app");
+
+        ReactDOM.render(app, mount);
+
+        class App extends React.Component {
+            render() {
+                return <h1>Hello from our app</h1>
+            }
+        }
+
+        const wrap = document.querySelector('#app');
+        ReactDOM.render(<App />, mount);
+
+
+    </script>
+
+</body>
+
+</html>

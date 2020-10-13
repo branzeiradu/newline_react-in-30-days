@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Hello World!</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    </head>
+    <body>
+        <div id="app-es5">
+
+        </div>
+
+        <div id="app-es6">
+
+        </div>
+
+        <div id="app-jsx">
+
+        </div>
+        
+
+
+        <script type="text/babel">
+            //ReactDOM.render( <h1>Hello World!</h1>, document.querySelector("#app") );
+        
+            class HelloWorld extends React.Component {
+                render(){
+                    return React.createElement( 'h1', {className: 'large'}, "Hello, World!" ); 
+                }
+            }
+
+            class HelloWorld_JSX extends React.Component {
+                render(){
+                    return <h1 className="large">Hello, World! JSX</h1>; 
+                }
+            }
+
+            const HelloWorld_ES5=function(){ } // constructor
+            console.log(HelloWorld_ES5);
+            HelloWorld_ES5.prototype = Object.create( React.Component.prototype );
+            
+            HelloWorld_ES5.prototype.render = function(){  
+                return React.createElement( 'h1', {className: 'large'}, "Hello, World! ES5" );  
+            };
+            console.log(HelloWorld_ES5.prototype);
+            console.log(<HelloWorld_ES5/>);
+
+            ReactDOM.render( <HelloWorld_JSX/>, document.querySelector("#app-jsx") );
+            ReactDOM.render( <HelloWorld/>, document.querySelector("#app-es6") );
+            ReactDOM.render( <HelloWorld_ES5/>, document.querySelector("#app-es5") );
+            
+
+
+
+
+        </script>
+        
+    </body>
+</html>
