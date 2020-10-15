@@ -9,11 +9,23 @@
 
     <link href="https://cdn.jsdelivr.net/gh/fullstackreact/30-days-of-react@master/day-04/public/Timeline.css"
         rel="stylesheet" type="text/css" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css" />
+
+
 </head>
 
 <body>
-    <div id="app">
 
+
+    <div class="demo">
+        <div id="app">
+
+        </div>
+        <div id="timeline">
+
+        </div>
     </div>
 
 
@@ -21,22 +33,162 @@
 
 
     <script type="text/babel">
-        const app = React.createElement("h1", {}, "Hello, World!");
-        const mount = document.querySelector("#app");
 
-        ReactDOM.render(app, mount);
-
-        class App extends React.Component {
+        class Timeline extends React.Component {
             render() {
-                return <h1>Hello from our app</h1>
+                return (
+                    <div className="notificationsFrame">
+                        <div className="panel">
+                            <div className="header">
+
+                                <div className="menuIcon">
+                                    <div className="dashTop"></div>
+                                    <div className="dashBottom"></div>
+                                    <div className="circle"></div>
+                                </div>
+
+                                <span className="title">Timeline</span>
+
+                                <input
+                                    type="text"
+                                    className="searchInput"
+                                    placeholder="Search ..." />
+
+                                <div className="fa fa-search searchIcon"></div>
+                            </div>
+                            <div className="content">
+                                <div className="line"></div>
+                                <div className="item">
+
+                                    <div className="avatar">
+                                        <img
+                                            alt='doug'
+                                            src="http://www.croop.cl/UI/twitter/images/doug.jpg" />
+                                    </div>
+
+                                    <span className="time">
+                                        An hour ago
+                                    </span>
+                                    <p>Ate lunch</p>
+                                </div>
+
+                                <div className="item">
+                                    <div className="avatar">
+                                        <img
+                                            alt='doug' src="http://www.croop.cl/UI/twitter/images/doug.jpg" />
+                                    </div>
+
+                                    <span className="time">10 am</span>
+                                    <p>Read Day two article</p>
+                                </div>
+
+                                <div className="item">
+                                    <div className="avatar">
+                                        <img
+                                            alt='doug' src="http://www.croop.cl/UI/twitter/images/doug.jpg" />
+                                    </div>
+
+                                    <span className="time">10 am</span>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+
+                                <div className="item">
+                                    <div className="avatar">
+                                        <img
+                                            alt='doug' src="http://www.croop.cl/UI/twitter/images/doug.jpg" />
+                                    </div>
+
+                                    <span className="time">2:21 pm</span>
+                                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                )
             }
         }
 
-        const wrap = document.querySelector('#app');
-        ReactDOM.render(<App />, mount);
 
+
+        class App extends React.Component {
+            render() {
+                return (
+                    <div className="notificationsFrame">
+                        <div className="panel">
+                            <Header />
+                            <Content />
+                        </div>
+                    </div>
+                )
+            }
+        }
+
+        class Header extends React.Component {
+            render() {
+                return (
+                    <div className="header">
+                        <div className="menuIcon">
+                            <div className="dashTop"></div>
+                            <div className="dashBottom"></div>
+                            <div className="circle"></div>
+                        </div>
+                        <span className="title">Timeline</span>
+
+                        <input
+                            type="text"
+                            className="searchInput"
+                            placeholder="Search ..." />
+
+                        <div className="fa fa-search searchIcon"></div>
+                    </div>
+                )
+            }
+        }
+
+
+
+        class Content extends React.Component {
+            render() {
+                return (
+                    <div className="content">
+                        <div className="line"></div>
+
+                        {/* Timeline item */}
+                        <div className="item">
+                            <div className="avatar">
+                                <img
+                                    alt='Doug'
+                                    src="http://www.croop.cl/UI/twitter/images/doug.jpg" />
+                                   
+                            </div>
+
+                            <span className="time"> An hour ago </span>
+                            <p>Ate lunch</p>
+                            <div className="commentCount"> 2 </div>
+                        </div>
+
+                        {/* ... */}
+
+                    </div>
+                )
+            }
+        }
+
+
+
+
+
+
+        const wraper = document.querySelector("#timeline");
+
+        const notifPanel = document.querySelector("#app");
+        ReactDOM.render(<App/>, wraper);
+        ReactDOM.render(<Timeline/>, notifPanel);
 
     </script>
+
+
 
 </body>
 
