@@ -52,22 +52,14 @@
             }
         }
     </style>
-
-
 </head>
-
 <body>
-
 
     <div class="demo">
         <div id="app">
 
         </div>
     </div>
-
-
-
-
 
     <script type="text/babel">
 
@@ -79,15 +71,11 @@
                 this.timeout = null;
 
                 this.setTimer();
-
-
-
-
-
             }
-            setTimer() {
 
+            setTimer() {
                 clearTimeout(this.timeout);
+
                 const timeoutFn = () => {
                     this.updateClock();
                 };
@@ -113,7 +101,6 @@
 
             render() {
 
-
                 const { hours, minutes, seconds, ampm } = this.state;
                 const jsx = <div className="clock">
                     {
@@ -127,7 +114,6 @@
                     } {ampm}
                 </div>;
 
-
                 return (jsx);
             }
         }
@@ -135,12 +121,6 @@
         const mount = document.querySelector("#app");
         ReactDOM.render(<Clock />, mount);
 
-
-
     </script>
-
-
-
 </body>
-
 </html>
