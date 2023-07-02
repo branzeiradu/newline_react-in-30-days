@@ -53,3 +53,11 @@ Correct way to set the new state based on the old state and the properties of a 
         this.setState();
 
 See also: https://stackoverflow.com/questions/32884780/how-can-i-remove-an-attribute-from-a-react-components-state-object        
+
+Method setState() on the `this` value of the component is part of the `React.Component` class we are subclassing.
+
+Calling `this.setState()` with an object argument, it will perform a shallow merge of the passed data into the object available in `this.state` and will re-render the component.
+
+As a rule of thumb, keep in state only values used to render the component. More precisely, values you have to use in the `render()` function. It's a bad idea to store objects or calculations in the state which you don't plan to use in the render function as it causes unnecessary rendering of the component and wasteful computations.
+
+Whenever possible use component properties because they are easier to test compared to stateful components.

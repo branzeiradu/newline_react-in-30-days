@@ -1,0 +1,213 @@
+<html>
+<!-- from day-10 -->
+
+<head>
+    <meta charset="utf-8" />
+    <title>Day 7: Stateful Content</title>
+    <!-- Script tags including React -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script src="./data.js"></script>
+
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css" />
+
+    <script src="https://unpkg.com/prop-types@15.6.2/prop-types.min.js"></script>
+
+
+    <style>
+        .box {
+            padding: 10px;
+            outline: 1px solid red;
+            margin-top: 10px;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="demo">
+        <div class="notificationsFrame">
+            <div id="app"></div>
+            <div id="app_"></div>
+        </div>
+    </div>
+    <script type="text/babel">
+
+        class MouseMover extends React.Component {
+            count = 0;
+            timeout = 0;
+            state = {
+                x: 0,
+                y: 0
+            };
+            
+            handleMouseMove = e => {
+                this.setState({
+                    x: e.clientX,
+                    y: e.clientY
+                });
+                
+            };
+
+            componentWillUpdate(nextProps, nextState){
+                clearTimeout(this.timeout);
+                this.timeout = setTimeout(()=>{
+                    console.log( `MouseMover state iteration ${++this.count} x: ${nextState.x} y: ${nextState.y}`);
+                }, 500);
+            }
+
+            render() {
+                return (
+                    <div className="box" onMouseMove={this.handleMouseMove}>
+                        {this.state.x || this.state.y
+                            ? "The mouse is at x: " + this.state.x + ", y: " +
+                            this.state.y
+                            : "Move the mouse over this box"}
+                    </div>
+                );
+            }
+        }
+
+        class MouseClicker extends React.Component {
+            count = 0;
+            state = {
+                x: 0,
+                y: 0
+            };
+            
+            handleMouseClick = e => {
+                this.setState({
+                    x: e.clientX,
+                    y: e.clientY
+                });
+                
+            };
+
+            componentWillUpdate(nextProps, nextState){
+                console.log( `MouseClicker state iteration ${++this.count} x: ${nextState.x} y: ${nextState.y}`);
+            }
+
+            render() {
+                return (
+                    <div className="box" onClick={this.handleMouseClick}>
+                        { 
+                            (this.state.x || this.state.y)
+                            ? `Click occured at x: ${ this.state.x}, y: ${this.state.y} over this box` : " Click somewhere on this box"
+                        }
+                    </div>
+                );
+            }
+        }
+
+        class MouseDown extends React.Component {
+            count = 0;
+            state = {
+                x: 0,
+                y: 0
+            };
+            
+            handleMouseDown = e => {
+                this.setState({
+                    x: e.clientX,
+                    y: e.clientY
+                });
+                
+            };
+
+            componentWillUpdate(nextProps, nextState){
+                console.log( `MouseDown state iteration ${++this.count} x: ${nextState.x} y: ${nextState.y}`);
+            }
+
+            render() {
+                return (
+                    <div className="box" onMouseDown={this.handleMouseDown}>
+                        { 
+                            (this.state.x || this.state.y)
+                            ? `MouseDown occured at x: ${ this.state.x}, y: ${this.state.y} over this box` : " Click somewhere on this box"
+                        }
+                    </div>
+                );
+            }
+        }
+
+        class MouseUp extends React.Component {
+            count = 0;
+            state = {
+                x: 0,
+                y: 0
+            };
+            
+            handleMouseUp = e => {
+                this.setState({
+                    x: e.clientX,
+                    y: e.clientY
+                });
+                
+            };
+
+            componentWillUpdate(nextProps, nextState){
+                console.log( `MouseUp state iteration ${++this.count} x: ${nextState.x} y: ${nextState.y}`);
+            }
+
+            render() {
+                return (
+                    <div className="box" onMouseUp={this.handleMouseUp}>
+                        { 
+                            (this.state.x || this.state.y)
+                            ? `MouseUp occured at x: ${ this.state.x}, y: ${this.state.y} over this box` : " Click somewhere on this box"
+                        }
+                    </div>
+                );
+            }
+        }
+
+        class MouseDblClicker extends React.Component {
+            count = 0;
+            state = {
+                x: 0,
+                y: 0
+            }
+
+            handleMouseClick = e => {
+                this.setState({
+                    x: e.clientX,
+                    y: e.clientY
+                });
+            }
+
+            componentWillUpdate(nextProps, nextState){
+                console.log( `MouseDblClicker state iteration ${++this.count} x: ${nextState.x} y: ${nextState.y}`);
+            }
+
+            render() {
+                return (
+                    <div className="box" onDoubleClick={this.handleMouseClick}>
+                        { 
+                            (this.state.x || this.state.y)
+                            ? `Double click occured at x: ${ this.state.x}, y: ${this.state.y} over this box` : " Click somewhere on this box"
+                        }
+                    </div>
+                );
+            }
+        }
+        
+
+        ReactDOM.render(
+                <div>
+                    <MouseMover />
+                    <MouseClicker />
+                    <MouseDblClicker />
+                    <MouseDown />
+                    <MouseUp />
+                </div>,
+                document.querySelector("#app"));        
+    
+    </script>
+</body>
+
+</html>

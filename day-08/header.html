@@ -1,4 +1,5 @@
 <html>
+<!-- from day-7/refresh-list.html file -->
 
 <head>
     <meta charset="utf-8" />
@@ -18,7 +19,8 @@
 
     <link href="https://cdn.jsdelivr.net/gh/fullstackreact/30-days-of-react@master/day-04/public/Timeline.css"
         rel="stylesheet" type="text/css" />
-
+    <script
+        src="https://unpkg.com/prop-types@15.6.2/prop-types.min.js"></script>
 </head>
 
 <body>
@@ -31,18 +33,18 @@
 
 
     <script type="text/babel">
+
         class Content extends React.Component {
+
             constructor(props) {
                 super(props);
-                this.renderCount=1;
+                this.renderCount = 1;
                 this.state = {
                     activities: [],
                     loading: false // <~ set loading to false
                 };
             }
 
-
-            
             componentWillMount() {
                 /*
                 componentWillMount() is invoked just before mounting occurs. 
@@ -52,7 +54,7 @@
                 instead for initializing state.
                 */
 
-                console.log( this.renderCount + " Content::componentWillMount()");
+                console.log(this.renderCount + " Content::componentWillMount()");
                 this.updateData();
             }
 
@@ -67,28 +69,30 @@
                 this.setState() in this method.
                 If a parent component causes your component to re-render, 
                 this method will be called even if props have not changed. 
-                Make sure to compare the current and next values
-                 if you only want to handle changes.
-                
+                Make sure to compare the current and next values if you only want to handle changes.
                 */
                 console.log(this.renderCount + " Content::componentWillReceiveProps() ");
                 console.log(nextProps);
                 //Check to see if the requestRefresh prop has changed
-                if (nextProps.isRefreshing === true) {
+                if (nextProps.isRefreshing == true) {
                     this.setState({ loading: true }, this.updateData);
                 }
             }
 
             // Call out to github data and refresh directory
             updateData() {
-                console.log(this.renderCount + " Content::updateData()");
-                const state =  {
-                    loading: false,
-                    activities: data.sort(() => 0.5 - Math.random()).slice(0, 4)
-                };
-                console.log(state);
-                
-                this.setState( state, this.props.onRefresh );
+                //request placeholder
+
+                setTimeout(() => {
+                    console.log(this.renderCount + " Content::updateData()");
+                    const state = {
+                        loading: false,
+                        activities: data.sort(() => 0.5 - Math.random()).slice(0, 4)
+                    };
+                    console.log(state);
+
+                    this.setState(state, this.props.onRefreshDone);
+                }, 1000);
             }
 
             render() {
@@ -99,17 +103,24 @@
                     <div className="content">
                         <div className="line" />
                         {/* Show loading message if loading */}
-                        {loading && <div>Loading</div>}
-                        {/* Timeline item */}
-                        {activities.map(activity => (
-                            <ActivityItem key={activity.id} activity={activity} />
-                        ))}
+                        {
+                            loading
+                                ? <div><center>Loading...</center></div>
+                                : activities.map(activity => (
+                                    <ActivityItem key={activity.id} activity={activity} />
+                                ))
+                        }
                     </div>
                 );
             }
         }
 
         class ActivityItem extends React.Component {
+
+            componentWillUnmount() {
+                console.log("ActivityItem::componentWillUnmount");
+            }
+
             render() {
                 const { activity } = this.props; // ES6 destructuring
 
@@ -156,6 +167,11 @@
             }
         }
 
+        Header.propTypes = { 
+            title: PropTypes.string
+        }
+        
+
         class Footer extends React.Component {
             render() {
                 return <div className="footer">{this.props.children}</div>;
@@ -165,8 +181,7 @@
         class Container extends React.Component {
             constructor(props) {
                 super(props);
-                this.renderCount=1;
-
+                this.renderCount = 1;
                 this.state = { refreshing: false };
             }
 
@@ -174,21 +189,19 @@
             refreshList() {
                 console.log("Refresh button clicked!");
                 const state = { refreshing: true };
-                console.log( this.renderCount + " Container::refreshList() refreshing=true");
-                this.setState(state
-                    ,this.onComponentRefresh
-                );
+                console.log(this.renderCount + " Container::refreshList() refreshing=true");
+                this.setState(state);
             }
 
             // Callback from the `Content` component
-            onComponentRefresh() {
+            onComponentRefreshDone() {
                 const state = { refreshing: false };
-                console.log( this.renderCount + " Container::onComponentRefresh()  refreshing=false");
+                console.log(this.renderCount + " Container::onComponentRefresh()  refreshing=false");
                 this.setState(state);
             }
 
             render() {
-                console.log( this.renderCount + " Container::render()");
+                console.log(this.renderCount + " Container::render()");
                 const { refreshing } = this.state;
                 this.renderCount++;
                 return (
@@ -197,14 +210,15 @@
                             <Header title="Github activity" />
                             {/* refreshing is the component's state */}
                             <Content
-                                //onRefresh={this.onComponentRefresh.bind(this)}
+                                onRefreshDone={this.onComponentRefreshDone.bind(this)}
                                 isRefreshing={refreshing}
                                 const_data={true}
                             />
+
                             {/* A container for styling */}
                             <Footer>
-                                <button onClick={this.refreshList.bind(this)}
-                                > <i className="fa fa-refresh" /> Refresh 
+                                <button onClick={this.refreshList.bind(this)}>
+                                    <i className="fa fa-refresh" /> {!refreshing ? "Refresh Data" : "Refreshing..."}
                                 </button>
                             </Footer>
                         </div>

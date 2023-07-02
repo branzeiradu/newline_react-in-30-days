@@ -18,6 +18,11 @@
 
     <link href="https://cdn.jsdelivr.net/gh/fullstackreact/30-days-of-react@master/day-04/public/Timeline.css"
         rel="stylesheet" type="text/css" />
+    <style>
+        .avatar--outline {
+            outline: 1px solid red;
+        }
+    </style>    
 
 </head>
 
@@ -31,13 +36,8 @@
 
 
     <script type="text/babel">
-        
-
-      
-
 
         class Content extends React.Component {
-
             constructor(props) {
                 super(props);
                 this.state = {
@@ -47,25 +47,29 @@
             }
 
             componentWillMount() {
-                console.log("Content::componentWillMount()");
-                setTimeout(() => { //placeholder for async request
-                    console.log("Content::componentWillMount_setTimeout()");
+                var seconds = 10;
+                //console.log("Content the async request");
+                setInterval(() => { //placeholder for async request
+                    //console.log("Content::componentWillMount_setTimeout() seconds: " + seconds);
                     this.setState({ activities: data });
-                }, 2000);
+                }, seconds * 1000);
+            }
+
+            componentDidMount() {
+                //console.log("Content::componentDidMount()");
             }
 
             componentDidUpdate() {
-                console.log("Content::componentDidUpdate()");
+                //console.log("Content::componentDidUpdate()");
             }
 
 
             render() {
                 
                 const { activities } = this.state;
-                console.log(`Content render() ${activities.length}`);
+                //console.log(`Content render() ${activities.length}`);
 
                 const activities_jsx = activities.map(activity_data => {
-
                     return <ActivityItem activity={activity_data} />
                 });
 
@@ -84,13 +88,26 @@
 
 
         class ActivityItem extends React.Component {
-            render() {
 
+            constructor(props) {
+                super(props);
+                this.isOutlined = false;
+            }
+
+            componentWillReceiveProps() {
+                //console.log("ActivityItem::componentWillReceiveProps()");
+                const {activity} = this.props;
+                this.isOutlined = activity.repo.name.indexOf("-native-") > -1;
+                //console.log(this.props);
+            }
+        
+            render() {
+                //console.log("ActivityItem::render()");
                 const { activity } = this.props; // ES6 destructuring
 
                 return (
                     <div className="item">
-                        <div className={"avatar"}>
+                        <div className={`avatar ${(this.isOutlined) ? "avatar--outline" : ""}`}>
                             <img alt="avatar" src={activity.actor.avatar_url} />
                         </div>
 
