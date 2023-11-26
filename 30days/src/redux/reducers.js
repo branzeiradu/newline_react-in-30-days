@@ -1,22 +1,15 @@
-import { FETCH_NEW_TIME } from "./types";
+import { combineReducers } from 'redux';
 
-export const initialState = {
-    //the state has a single key
-    currentTime: new Date().toString()
+import * as currentUser from './currentUser';
+import * as currentTime from './currentTime';
+
+export const initialRootState = {
+    time: currentTime.initialState,
+    user: currentUser.initialState
 };
 
+export const rootReducer = combineReducers({
+    time: currentTime.reducer,
+    user: currentUser.reducer
+});
 
-// root reducers starts with the initial state 
-// must return a representation of the next state
-// first time it runs, the rootReducer is called with no arguments
-// so it always return the initialState on the first run
-export const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case FETCH_NEW_TIME: {
-            return { ...state, currentTime: action.payload };
-        }
-        default: {
-            return state;
-        }
-    }
-} 
